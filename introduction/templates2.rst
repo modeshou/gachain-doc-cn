@@ -455,8 +455,8 @@ DBFind(table, Source) [.Columns(columns)] [.Where(conditions)] [.WhereId(id)] [.
 
 * **Name** - 表名称；
 * **Source** - 任意数据源名称；
-* **Columns** - 要返回的列的列表。 如果未指定，则将返回所有列；
-* **Where** - 搜索条件。 例如： ``.Where(name = '#myval#')``；
+* **Columns** - 要返回的列的列表。 如果未指定，则将返回所有列；如果有JSON类型的列，您可以使用以下语法来处理记录字段:**columnname->fieldname**。在本例中，生成的列名将是**columnname.fieldname**。
+* **Where** - 数据搜索条件，例如，''。在哪里(name = '#myval#')''。如果有JSON类型的列，您可以使用以下语法来处理记录字段:**columnname->fieldname**，
 * **WhereId** - 按ID搜索。 例如： ``.WhereId(1)``；
 * **Order** - 字段排序；
 * **Limit** - 返回的行数， ``Default value = 25, maximum value = 250``；
@@ -468,7 +468,7 @@ DBFind(table, Source) [.Columns(columns)] [.Where(conditions)] [.WhereId(id)] [.
   * *Body* - 一个代码片段。 你可以使用 **#columnname#** 从此条目中的其他列中获取值，并在此代码片段中使用它们；
   * **Vars** - 该函数将从该查询中获取数据库表中的值，并生成一组变量。 指定此函数时， *Limit* 参数自动变为1，并且只返回一条记录。
 
-* **Prefix** - 前缀函数用于为变量生成名称，并将结果行的值保存到该变量中：变量格式为 ``#prefix_id#，#prefix_name#`` ，其中列名称紧跟下划线符号。
+* **Prefix** - 前缀函数用于为变量生成名称，并将结果行的值保存到该变量中：变量格式为 ``#prefix_id#，#prefix_name#`` ，其中列名称紧跟下划线符号。如果有包含JSON字段的列，则结果变量将是以下格式**#prefix_columnname_field#**。
 
 .. code:: 
 
@@ -501,7 +501,7 @@ LangRes(Name, Lang)
 返回指定的语言资源。如果要求编辑树，则返回 ``$langres$`` 元素。
 
 * *Name* - 语言资源的名称；
-* *Lang* - 默认情况下，返回是 *Accept-Language* 请求中定义的语言。 你可以指定自己的双字符语言标识符。
+* *Lang* - 默认情况下，返回是 *Accept-Language* 请求中定义的语言。 你可以指定自己的双字符语言标识符。可以指定lcid标识符，例如*en-US,en-GB*。在这种情况下，如果没有找到所请求的值，例如，对于*en- us *，那么将在*en*中查找语言资源。
 
 .. code:: js
 
