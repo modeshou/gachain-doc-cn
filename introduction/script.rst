@@ -116,7 +116,7 @@
 * ``$key_id`` – 签署交易的账户的ID，VDE合约的金额将为零；
 * ``$wallet_block`` – 形成包含此事务的区块的节点的地址；
 * ``$block_time`` – 包含当前合约的交易的区块形成时的时间，time。
-* ``$original_contract`` - 合约的名称，最初被称为事务处理。如果该变量是空字符串，则意味着在验证条件的过程中调用了该合约。为了检查该合同是否被另一个合同或直接从交易中调用，  **$original_contract** 和 **$this_contract** 的值。如果它们相等，则意味着从事务中调用了合约。
+* ``$original_contract`` - 合约的名称，最初被称为事务处理。如果该变量是空字符串，则意味着在验证条件的过程中调用了该合约。为了检查该合同是否被另一个合同或直接从事务中调用， **$original_contract** 和 **$this_contract** 的值。如果它们相等，则意味着从事务中调用了合约；
 * ``$this_contract`` - 当前执行的合约的名称。
 
 预定义变量不仅可以在合约中访问，也可以在权限字段中（定义访问应用程序元素的条件）访问，这些变量用于构建逻辑表达式。当在权限字段中使用时，与区块形成（$time，$block等）相关的变量总是等于零。
@@ -484,7 +484,7 @@ DBInsert(table string, params string, val ...) int
 
 DBUpdate(tblname string, id int, params string, val...)
 -------------------------------------------------------------------------------------------------
-该函数通过指定的 **id** 将表中的列值更改为记录。如果此标识符的记录不存在，则操作将导致错误。
+该函数通过指定的 **id** 将表中的列值更改为记录。如果此标识符的记录不存在，操作将导致错误。
 
 * *tblname*  – 数据库表名称；
 * *id* - 需要修改的数据的ID；
@@ -622,9 +622,10 @@ EvalCondition(tablename string, name string, condfield string)
 
 .. code:: js
 
-    EvalCondition(`menu`, $Name, `condition`)      
+    EvalCondition(`menu`, $Name, `condition`)
+
 GetContractById(id int) string
-------------------------------
+--------------------------------
 该函数通过标识符返回合约名称。如果无法找到合约，将返回空字符串。
 
  * *id* - 在 *合约* 表中的合约标识符
@@ -635,7 +636,7 @@ GetContractById(id int) string
     id = GetContractById(`NewBlock`)  
     
 GetContractByName(name string) int
------------------------------- 
+---------------------------------------- 
 函数在 *合约* 中返回一个合约标识符。如果该合约不存在，则返回零值。
 
  * *name* - 在 *合约* 表中的合约标识符。

@@ -880,7 +880,7 @@ content/{menu|page}/{name}
 
 * *menu|page* - *page* 或 *menu* 收到的页面或菜单；
 * *name* - 页面的名称或菜单；
-* *[lang]* - 可以指定lcid或两个字母的语言代码来处理相应的语言资源,例如： *en,ru,fr,en-US,en-GB* . 如果没有找到 *en-US* 文件资源 , 默认使用 *en* 而不是 *en-US* ,
+* *[lang]* - 可以指定lcid或两个字母的语言代码来处理相应的语言资源，例如： *en、ru、fr、en-US、en-GB* 。如果没有找到 *en-US* 文件资源，默认使用 *en* 而不是 *en-US* ；
 * *[vde]* - 如果从VDE的页面或菜单中接收数据，请指定 ``true`` 。否则，不需要指定这个参数。
 
 .. code:: 
