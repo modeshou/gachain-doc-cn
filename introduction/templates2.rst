@@ -466,9 +466,9 @@ DBFind(table, Source) [.Columns(columns)] [.Where(conditions)] [.WhereId(id)] [.
  
   * *Column* - 列名称。 应该分配一个独特的名字；
   * *Body* - 一个代码片段。 你可以使用 ``#columnname#`` 从此条目中的其他列中获取值，并在此代码片段中使用它们；
-  * **Vars** - 该函数将从该查询中获取数据库表中的值，并生成一组变量。 指定此函数时， *Limit* 参数自动变为1，并且只返回一条记录。
+* **Vars** - 该函数将从该查询中获取数据库表中的值，并生成一组变量。 指定此函数时， *Limit* 参数自动变为1，并且只返回一条记录。
 
-* **Prefix** - 前缀函数用于为变量生成名称，并将结果行的值保存到该变量中：变量格式为 ``#prefix_id#，#prefix_name#`` ，其中列名称紧跟下划线符号。如果有包含JSON字段的列，则结果变量将是以下格式 ``#prefix_columnname_field#``。
+  * *Prefix* - 前缀函数用于为变量生成名称，并将结果行的值保存到该变量中：变量格式为 ``#prefix_id#，#prefix_name#`` ，其中列名称紧跟下划线符号。如果有包含JSON字段的列，则结果变量将是以下格式 ``#prefix_columnname_field#``。
 
 .. code:: 
 
