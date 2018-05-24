@@ -1046,7 +1046,9 @@ NewPage
 * *Name string* - 合约名称；
 * *Value string* - 页面文本信息；
 * *Menu string* - 菜单的名称，附在这个页面上；
-* *Conditions string* - 修改的权限。
+* *Conditions string* - 修改的权限;
+* *ValidateCount int <optional>* - 用于检查页面有效性的节点数量，如果未指定参数，则使用生态系统参数*min_page_validate_count*中的值。该值不能小于*min_page_validate_count*和大于*max_page_validate_count*；
+* *ValidateMode int <optional>* - 检查页面的数量。0 - 仅在加载时，1 - 在加载和离开页面时。
 
 EditPage
 ---------------------------------
@@ -1055,7 +1057,9 @@ EditPage
 * *Id int* - 要更改的页面的ID；
 * *Value string* - 页面的新文本信息；
 * *Menu string* - 页面上新菜单的名称；
-* *Conditions string* - 页面更改的权限。
+* *Conditions string* - 页面更改的权限；
+* *ValidateCount int <optional>* - 用于检查页面有效性的节点数量，如果未指定参数，则使用生态系统参数*min_page_validate_count*中的值。该值不能小于*min_page_validate_count*和大于*max_page_validate_count*；
+* *ValidateMode int <optional>* - 检查页面的数量。0 - 仅在加载时，1 - 在加载和离开页面时。
 
 AppendPage
 ---------------------------------
