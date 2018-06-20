@@ -1,1 +1,1 @@
-http://gachain.readthedocs.io/zh_CN/latest/
+http://gachain.readthedocs.io/zh/latest/

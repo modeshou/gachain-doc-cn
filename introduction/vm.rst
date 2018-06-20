@@ -663,16 +663,17 @@ n是0x0a，s是空格，q是反引号，Q是双引号，r是字符> = 128，a是
 
 * **Type** – 通证（Token）类型。可以是以下值: *lexSys，lexOper，lexNumber，lexIdent，lexString，lexComment，lexKeyword，lexType，lexExtend*；
 * **Value** – 通证（Token）值。值的类型取决于通证（Token）的类型，让我们更详细地考虑一下：
- * **lexSys** – 包括括号，逗号等，在这种情况下，*Type = ch << 8 | lexSys* ，请参阅 *isLPar...isRBrack* 常量，Value本身是uint32(ch)；
- * **lexOper** – 值表示 *uint32* 形式的等同字符序列。例如，请参阅 *isNot...isOr*常量；
- * **lexNumber** – 数字存储为 *int64* 或 *float64*。如果该数值有一个小数点，那么它是float64；
- * **lexIdent** – 标识符存储为字符串；
- * **lexNewLine** – 换行符。也用来计算线和标记的位置，
- * **lexString** – 行被存储为 *字符串*；
- * **lexComment** – 注释也存储为 *字符串*；
- * **lexKeyword** – 键只存储相应的索引 – 来自 *keyContract ... keyTail* 常量。在这种情况下， *Type = KeyID << 8 | lexKeyword*。此外，应该注意， *true，false，nil* 关键会立即转换为 *lexNumber* 类型的通证（Token），并带有合适的 *bool* 和 *intreface {}* 类型；
- * **lexType** – 值包含对应的 *reflect.Type* 类型的值；
- * **lexExtend** – 以美元符号 **$** 开头的标识符。这些变量和函数从外部传递，因此分配给特殊类型的标识。该值包含的名称以字符串的形式在开头，没有美元符号。
+
+    * **lexSys** – 包括括号，逗号等，在这种情况下，*Type = ch << 8 | lexSys* ，请参阅 *isLPar...isRBrack* 常量，Value本身是uint32(ch)；
+    * **lexOper** – 值表示 *uint32* 形式的等同字符序列。例如，请参阅 *isNot...isOr* 常量；
+    * **lexNumber** – 数字存储为 *int64* 或 *float64*。如果该数值有一个小数点，那么它是float64；
+    * **lexIdent** – 标识符存储为字符串；
+    * **lexNewLine** – 换行符。也用来计算线和标记的位置，
+    * **lexString** – 行被存储为 *字符串*；
+    * **lexComment** – 注释也存储为 *字符串*；
+    * **lexKeyword** – 键只存储相应的索引 – 来自 *keyContract ... keyTail* 常量。在这种情况下， *Type = KeyID << 8 | lexKeyword*。此外，应该注意， *true，false，nil* 关键会立即转换为 *lexNumber* 类型的通证（Token），并带有合适的 *bool* 和 *intreface {}* 类型；
+    * **lexType** – 值包含对应的 *reflect.Type* 类型的值；
+    * **lexExtend** – 以美元符号 **$** 开头的标识符。这些变量和函数从外部传递，因此分配给特殊类型的标识。该值包含的名称以字符串的形式在开头，没有美元符号。
 
 * **Line** – 找到通证（Token）的字符串；
 * **Column** – 通证（Token）在字符串中的位置。

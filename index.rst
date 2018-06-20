@@ -25,12 +25,13 @@ GAChain平台的软件客户端起名为Molis和编程语言：智语言（G Lan
 本文档包含平台功能的最新描述，并且在更改或添加新功能时不断更新。
 
 目录
-======================================================
-.. toctree::
-   :maxdepth: 2
+======
 
-   introduction/what-is-Gachain.rst
-   introduction/script.rst
+.. toctree::
+   :maxdepth: 4
+
+   /introduction/what-is-Gachain.rst
+   /introduction/script.rst
    introduction/templates2.rst
    introduction/appexample.rst
    introduction/api2.rst 
@@ -38,4 +39,5 @@ GAChain平台的软件客户端起名为Molis和编程语言：智语言（G Lan
    introduction/vm.rst
    introduction/install.rst
    introduction/thesaurus.rst
+   introduction/contractsignatures.rst
    introduction/faq.rst
