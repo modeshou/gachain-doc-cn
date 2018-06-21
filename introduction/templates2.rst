@@ -1,14 +1,14 @@
-################################################################################
+###########
 用户界面
-################################################################################
+###########
 
 .. contents::
   :local:
   :depth: 2
 
-********************************************************************************
+***********
 创建界面
-********************************************************************************
+***********
 Molis软件客户端是一个集成开发环境，使用 ``React`` 框架开发，其中包括一个界面编辑器和一个虚拟界面编辑器。界面是应用程序的重要组成部分，提供从数据库表中检索和显示数据，创建用于接收用户输入数据的表单，将数据传递给合约以及在应用程序页面之间的导航。界面类似于合约，存储在区块链中，这样可以在软件客户端加载时防止伪造。
 
 界面模版引擎
@@ -207,24 +207,32 @@ AddToolButton(Title, Icon, Page, PageParams)
 
       AddToolButton(Help, help, help_page) 
       
-Button(Body, Page, Class, Contract, Params, PageParams) [.Alert(Text,ConfirmButton,CancelButton,Icon)] [.Style(Style)]
+Button(Body, Page, Class, Contract, Params, PageParams)[.CompositeCOntract(Name,Data)] [.Alert(Text,ConfirmButton,CancelButton,Icon)] [.Popup(Width, Header)] [.Style(Style)]
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-创建一个 **Button** HTML元素。这个元素创建一个按钮，它发送一个指定的合约执行。
+创建一个 **Button** HTML元素。这个元素创建一个按钮，通过点击可执行合约或者跳转至指定页面。
 
-* *Body* - 子文本或者元素；
-* *Page* - 要重定向到的页面的名称；
-* *Class* - 类的按钮；
-* *Contract* - 执行的合约的名称；
-* *Params* - 传递给合约的数值列表。默认情况下，合约参数（数据段）的值是从具有相似名称标识符（id）的HTML元素（例如，输入字段）获得的。如果元素标识符合约参数的名称不同，则应使用 ``contractField1 = idname1,contractField2 = idname2`` 格式中的分配。该参数作为目标对象 ``{field1:idname1,field2:idname2}`` 返回给 ``attr`` ；
+* *Body* - 文本信息或者元素，用于输入按钮的名称；
+* *Page* - 要跳转的页面名称；
+* *Class* - 样式类；
+* *Contract* - 执行的合约名称；
+* *Params* - 传递给合约的数值列表。默认情况下，合约参数（``data``）的值是从具有相似名称标识符（id）的HTML元素（例如，Input）获得的。如果元素标识符合约参数的名称不同，则应使用 ``contractField1 = idname1,contractField2 = idname2`` 格式中的分配。该参数作为目标对象 ``{field1:idname1,field2:idname2}`` 返回给 ``attr`` ；
 * *PageParams* - 跳转到页面的参数，格式：``contractField1 = idname1，contractField2 = idname2`` 。在这种情况下，目标页面上会创建参数名称为  ``#contractField1#`` 和 ``#contractField2#`` 的变量，并为其分配指定的值（请参阅 *使用PageParams将参数传递给页面* 部分）。
+**CompositeContract** - 连接按钮的附加合约。
+     * *Name* - 合约名称；
+     * *Data* - JSON数组，传递给合约所需的参数。
 
-**Alert** - 显示一条消息。
+**Alert** - 弹窗显示消息。
 
 * *Text* - 消息文本；
 * *ConfirmButton* - 确认按钮标题；
 * *CancelButton* - 取消按钮标题；
 * *Icon* - 按钮图标。
+
+**Popup** - 显示模态窗口
+
+* *Header* - 窗口的标题；
+* *Width* - 窗口宽度百分比，取值范围为1到100。
 
 **Style** - 用于指定CSS样式。
 
@@ -232,9 +240,11 @@ Button(Body, Page, Class, Contract, Params, PageParams) [.Alert(Text,ConfirmButt
 
 .. code:: js
 
+      Button(Submit, default_page).CompisiteContract(NewPage, [{"Name":"Name of Page"},{"Value":"Span(Test)"}])
       Button(Submit, default_page, mybtn_class).Alert(Alert message)
+      Button(Submit, default_page, mybtn_class).Popup(Header: message, Width: 50)
       Button(Contract: MyContract, Body:My Contract, Class: myclass, Params:"Name=myid,Id=i10,Value")
-      
+	  
 LinkPage(Body, Page, Class, PageParams) [.Style(Style)]
 ------------------------------------------------------------
 创建一个 **LinkPage** 元素 - 一个页面的链接。

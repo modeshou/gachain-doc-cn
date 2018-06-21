@@ -152,44 +152,34 @@ Molis软件客户端包括用于创建区块链应用程序的全面集成开发
 
 为了检索某些生态系统参数的值，合约语言智语言（G Language）和模板语言乾语言（Chain Language）都具有 *EcosysParam* 函数，其中可以将生态系统参数名称指定为参数。要从列表中检索元素（作为生态系统参数输入并用逗号分隔），需指定所需元素的计数值作为函数的第二个参数。
 
-platform 生态系统参数列表
-============================
  
- * **default_ecosystem_page** - 默认新建生态系统的第一界面；
- * **default_ecosystem_menu** - 默认新建生态系统的第一菜单；
- * **default_ecosystem_contract** - 默认新建生态系统的第一合约；
- * **gap_between_blocks** - 节点获取生成下一个区块权限的秒数，0< *gap_between_blocks* <86400;
- * **new_version_url** - 用于检查新版本可用性的主机（服务器更新)；
- * **full_nodes** - 可以生成区块的节点列表。它是[{"tcp_address":tcp主机IP，"api_address":主机IP，"key_id":帐户地址，"public_key":公钥}]形式的列表清单；
- * **number_of_nodes** - 全节点的最大数量。0< *number_of_nodes* <1000；
- * **max_block_size** - 最大区块的大小（以字节byte为单位），*max_block_size*>0；
- * **max_tx_size** - 每次事务最大的大小（以字节byte为单位），*max_tx_size*>0；
- * **max_tx_count** - 每个区块最大的事务数，*max_tx_count*>0；
- * **max_columns** - 用户创建表的最大列数，*max_columns*>0；
- * **max_indexes** - 用户创建表的最大索引数，*max_indexes*>0；
- * **max_block_user_tx** - 一个用户在每个区块中最大的事务数，*max_block_user_tx*>0；
- * **max_fuel_tx** - 每次事务最大的燃料数，*max_fuel_tx*>0；
- * **max_fuel_block** - 每个区块最大的燃料数，*max_fuel_block*>0；
- * **commission_size** - 从每次事务中扣除事务费用的百分比。*commission_size*>= 0；
- * **commission_wallet** - 根据当前生态系统收取事务费用的钱包地址。它是一对数组（生态系统的编号，账号地址）。例如，[["1"，"-943604719945132508"]]。有事务操作时，检查账号地址的有效性；
- * **fuel_rate** - GAC与燃料的转化率。它是一对数组（生态系统编号，乘数）。例如，[["1"，"100000000000"]]。乘数必须大于0；
- * **max_block_generation_time** - 区块生成的最大时间，（以毫秒ms为单位）；
- * **extend_cost_（funcname）** - 调用内置函数的费用，*extend_cost_x* >=0;
- * **（table|menu|contract|page|column|ecosystem）_price** - 创建数据表、菜单、合约、界面、字段、生态系统的费用，*x_price* >=0。
-
 政务链（GAChain）平台生态系统的参数
 ------------------------------------
 政务链区块链平台的所有参数都存储在平台配置生态系统的参数表中。这些是以下参数：
 
--	验证节点创建区块的时间段；
--	新生态系统的页面，合约，数据表和菜单的源代码；
--	验证节点列表；
--	最大事务和区块大小，以及一个区块中的最大事务数；
--	一个区块中同一个账户发送的最大交易数量；
--	在一条交易及一条交易中所消费的最高金额；
-- 在政务链上消费的燃料率和其它参数。
+* **default_ecosystem_page** - 默认新建生态系统的第一界面；
+* **default_ecosystem_menu** - 默认新建生态系统的第一菜单；
+* **default_ecosystem_contract** - 默认新建生态系统的第一合约；
+* **gap_between_blocks** - 节点获取生成下一个区块权限的秒数，0< *gap_between_blocks* <86400;
+* **new_version_url** - 用于检查新版本可用性的主机（服务器更新)；
+* **full_nodes** - 可以生成区块的节点列表。它是[{"tcp_address":tcp主机IP，"api_address":主机IP，"key_id":帐户址，"public_key":公钥}]形式的列表清单；
+* **number_of_nodes** - 全节点的最大数量。0< *number_of_nodes* <1000；
+* **max_block_size** - 最大区块的大小（以字节byte为单位），*max_block_size*>0；
+* **max_tx_size** - 每次事务最大的大小（以字节byte为单位），*max_tx_size*>0；
+* **max_tx_count** - 每个区块最大的事务数，*max_tx_count*>0；
+* **max_columns** - 用户创建表的最大列数，*max_columns*>0；
+* **max_indexes** - 用户创建表的最大索引数，*max_indexes*>0；
+* **max_block_user_tx** - 一个用户在每个区块中最大的事务数，*max_block_user_tx*>0；
+* **max_fuel_tx** - 每次事务最大的燃料数，*max_fuel_tx*>0；
+* **max_fuel_block** - 每个区块最大的燃料数，*max_fuel_block*>0；
+* **commission_size** - 从每次事务中扣除事务费用的百分比。*commission_size*>= 0；
+* **commission_wallet** - 根据当前生态系统收取事务费用的钱包地址。它是一对数组（生态系统的编号，账号地址）。例如，[["1"，"-943604719945132508"]]。有事务操作时，检查账号地址的有效性；
+* **fuel_rate** - GAC与燃料的转化率。它是一对数组（生态系统编号，乘数）。例如，[["1"，"100000000000"]]。乘数必须大于0；
+* **max_block_generation_time** - 区块生成的最大时间，（以毫秒ms为单位）；
+* **extend_cost_（funcname）** - 调用内置函数的费用，*extend_cost_x* >=0;
+* **（table|menu|contract|page|column|ecosystem）_price** - 创建数据表、菜单、合约、界面、字段、生态系统的费用，*x_price* >=0。
 
-在程序级别的管理平台上，配置生态系统的参数，与管理任何其他生态系统的参数相同。与其他生态系统不同，生态系统参数管理的所有权限属于生态系统创建者，只能使用 ``UpdSysContract`` 合约来执行政务链（GAChain）平台配置生态系统参数的更改，其管理是在平台的法律体系中定义。确定法律规则制度的特殊智能合约（智能法律），是在网络启动之前创建的，并实施白皮书“政务链（GAChain）平台法律制度”部分规定的权限和标准。
+在程序级别的管理平台上，配置生态系统的参数，与管理任何其他生态系统的参数相同。与其他生态系统不同，生态系统参数管理的所有权限属于生态系统创建者，只能使用 ``UpdateSysParam`` 合约来执行政务链（GAChain）平台配置生态系统参数的更改，其管理是在平台的法律体系中定义。确定法律规则制度的特殊智能合约（智能法律），是在网络启动之前创建的，并实施白皮书“政务链（GAChain）平台法律制度”部分规定的权限和标准。
 
 ****************
 访问权限控制机制
