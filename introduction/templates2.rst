@@ -208,7 +208,7 @@ AddToolButton(Title, Icon, Page, PageParams)
       AddToolButton(Help, help, help_page) 
       
 Button(Body, Page, Class, Contract, Params, PageParams)[.CompositeCOntract(Name,Data)] [.Alert(Text,ConfirmButton,CancelButton,Icon)] [.Popup(Width, Header)] [.Style(Style)]
-------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 创建一个 **Button** HTML元素。这个元素创建一个按钮，通过点击可执行合约或者跳转至指定页面。
 
@@ -218,6 +218,7 @@ Button(Body, Page, Class, Contract, Params, PageParams)[.CompositeCOntract(Name,
 * *Contract* - 执行的合约名称；
 * *Params* - 传递给合约的数值列表。默认情况下，合约参数（``data``）的值是从具有相似名称标识符（id）的HTML元素（例如，Input）获得的。如果元素标识符合约参数的名称不同，则应使用 ``contractField1 = idname1,contractField2 = idname2`` 格式中的分配。该参数作为目标对象 ``{field1:idname1,field2:idname2}`` 返回给 ``attr`` ；
 * *PageParams* - 跳转到页面的参数，格式：``contractField1 = idname1，contractField2 = idname2`` 。在这种情况下，目标页面上会创建参数名称为  ``#contractField1#`` 和 ``#contractField2#`` 的变量，并为其分配指定的值（请参阅 *使用PageParams将参数传递给页面* 部分）。
+
 **CompositeContract** - 连接按钮的附加合约。
      * *Name* - 合约名称；
      * *Data* - JSON数组，传递给合约所需的参数。

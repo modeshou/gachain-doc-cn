@@ -397,7 +397,20 @@ If 和 While
 需要从合约中返回的值应该被分配给一个预定义的变量 ``$result``。
 
 数据库中检索值
-==============================
+==============
+
+AppParam(app int, name string) string
+-----------------------------------------
+
+该函数返回应用程序参数（ *app_params* 表）指定参数的值。
+
+* *app* - 应用程序ID；
+* *name* - 参数名称。
+
+.. code:: js
+
+    Println(AppParam(1, "app_account"))
+
 DBFind(table string) [.Columns(columns string)] [.Where(where string, params ...)] [.WhereId(id int)] [.Order(order string)] [.Limit(limit int)] [.Offset(offset int)] [.Ecosystem(ecosystemid int)] array
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 函数根据指定的请求从数据库表中接收数据。返回的是由 ``map`` 关联数组组成的 ``数组`` 。
@@ -444,29 +457,69 @@ DBRow(table string) [.Columns(columns string)] [.Where(where string, params ...)
    var ret map
    ret = DBRow("contracts").Columns("id,value").Where("id = ?", 1)
    Println(map)
+
+DBSelectMetrics(metric string, timeInterval string, aggregateFunc string) array
+----------------------------------------------------------------------------------
+该函数返回查询 *metrics* 表的 *array* 数组，用于统计对应数量。统计数量每隔100个区块更新一次。
+
+* *metric* - 统计指标名称；
+
+   * ``ecosystem_pages`` - 生态系统界面的数量；
+   * ``ecosystem_members`` - 生态系统会员人数；
+   * ``ecosystem_tx`` - 生态系统交易数量。
+
+* *timeInterval* - 统计的时间间隔。例如， ``1 Weeks`` 或者 ``30 days``； 
+* *aggregateFunc* - 聚合函数，例如， ``max`` 、 ``min`` 、 ``avg``。
+
+.. code:: js
+
+   var rows array
+   rows = DBSelectMetrics("ecosystem_tx", "30 days", "avg")
+   
+   var i int
+   while(i < Len(rows)) {
+      var row map
+      row = rows[i] // row = [map[key:1 value:1463]]
+      i = i + 1
+   }
     
 EcosysParam(name string) string
 ---------------------------------
-该函数返回生态系统设置（参数表）中指定参数的值。
+该函数返回生态系统（ *parameters* 表）中指定参数的值。
 
 * *name* - 接收到的参数的名称；
 * *num* - 参数的序列号。
 
 .. code:: js
 
-    Println( EcosysParam("gov_account"))
+    Println( EcosysParam("changing_tables"))
 
-LangRes(label string, lang string) string
+LangRes(appID int64,label string, lang string) string
 -------------------------------------------------------------------------------------------------
-此函数返回lang的语言资源，并指定为双字符代码，例如， ``en,fr,ru`` ，如果所选语言没有语言资源，则结果将以 ``en`` 返回。
+此函数返回lang的语言资源，并指定为双字符代码，例如， ``zh,en,ru`` ，如果所选语言没有语言资源，则结果将以 ``zh`` 返回。
 
+* *appID* - 生态系统ID；
 * *label* - 语言资源名称；
 * *lang* - 双字符语言代码。
 
 .. code:: js
 
-    warning LangRes("confirm", $Lang)
-    error LangRes("problems", "de")
+    warning LangRes(1, "confirm", $Lang)
+    error LangRes(2, "problems", "de")
+
+GetBlock(blockID int64) map
+------------------------------
+该函数返回关于 *blockID* 区块的信息。 返回结果包含：
+
+* *id* - 区块ID；
+* *time* - 区块生成时间戳；
+* *key_id* - 该区块的节点账户地址。
+
+.. code:: js
+
+   var b map
+   b = GetBlock(1)
+   Println(b)
                      	
 更改数据表的值
 ==============================
@@ -510,7 +563,19 @@ DBUpdateExt(tblname string, column string, value (int|string), params string, va
     DBUpdateExt("mytable", "address", addr, "name,amount", "John Dow", 100)
     
 数组操作
-==============================
+========
+
+Append(src array, val someType) array
+----------------------------------------
+将 *val* 追加到 *src* 数组的末尾。若它有足够的容量，其目标就会重新切片以容纳新的元素。否则，就会返回一个新的基本数组。
+* *src* - 原数组；
+* *val* - 添加到数组中的值。
+
+.. code:: js
+
+    var list array
+    list = Append(list, "new_val")
+
 Join(in array, sep string) string
 ---------------------------------
 此函数将 ``in`` 数组的元素合并到指定的 ``sep`` 分隔符的字符串中。
@@ -575,6 +640,35 @@ One(list array, column string) string
    if ret != nil {
       Println(ret)
    }
+
+GetMapKeys(val map) array
+------------------------------
+该函数返回 *val* 中的键。
+
+* *val* - 映射数组。
+
+.. code:: js
+
+    var val map
+    var arr array
+    val["k1"] = "v1"
+    val["k2"] = "v2"
+    arr = GetMapKeys(val) // arr = [k1 k2]
+
+SortedKeys(val map) array
+------------------------------
+该函数返回 *val* 中的键的递增排序数组。
+
+* *val* - 映射数组。
+
+.. code:: js
+
+    var val map
+    var arr array
+    val["b1"] = "v1"
+    val["a3"] = "v3"
+    val["d2"] = "v2"
+    arr = SortedKeys(val) // arr = [a3 b1 d2]
 
 合约条件的使用
 ==============================
