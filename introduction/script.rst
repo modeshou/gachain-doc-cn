@@ -409,6 +409,13 @@ If 和 While
 
 需要从合约中返回的值应该被分配给一个预定义的变量 ``$result``。
 
+生成唯一标识符
+================
+
+UUID
+------
+以字符串形式生成并返回的新 *UUID 4*。
+
 数据库中检索值
 ==============
 
@@ -500,12 +507,83 @@ EcosysParam(name string) string
 ---------------------------------
 该函数返回生态系统（ *parameters* 表）中指定参数的值。
 
-* *name* - 接收到的参数的名称；
-* *num* - 参数的序列号。
+* *name* - 参数的名称。
 
 .. code:: js
 
     Println( EcosysParam("changing_tables"))
+
+GetBlockHistory(id int64) array 
+--------------------------------
+该函数返回 *_blocks* 表历史更改记录的数组，每一个数组都包含在上一个变更之前的记录字段，结果列表根据最新更改排序。
+
+* *id* - 更改记录ID。
+
+.. code:: js
+
+    var list array
+    var item map
+    list = GetBlockHistory(1)
+    if Len(list) > 0 {
+       item = list[0]
+    }
+
+GetContractHistory(id int64) array 
+-------------------------------------
+该函数返回 *_contracts* 表历史更改记录的数组，每一个数组都包含在上一个变更之前的记录字段，结果列表根据最新更改排序。
+
+* *id* - 更改记录ID。
+
+.. code:: js
+
+    var list array
+    var item map
+    list = GetContractHistory(1)
+    if Len(list) > 0 {
+       item = list[0]
+    }
+
+GetMenuHistory(id int64) array 
+--------------------------------
+该函数返回 *_menus* 表历史更改记录的数组，每一个数组都包含在上一个变更之前的记录字段，结果列表根据最新更改排序。
+
+* *id* - 更改记录ID。
+
+.. code:: js
+
+    var list array
+    var item map
+    list = GetMenuHistory(1)
+    if Len(list) > 0 {
+       item = list[0]
+    }
+
+GetPageHistory(id int64) array 
+--------------------------------
+该函数返回 *_pages* 表历史更改记录的数组，每一个数组都包含在上一个变更之前的记录字段，结果列表根据最新更改排序。
+
+* *id* - 更改记录ID。
+
+.. code:: js
+
+    var list array
+    var item map
+    list = GetPageHistory(1)
+    if Len(list) > 0 {
+       item = list[0]
+    }
+
+GetColumnType(table, column string) string
+-------------------------------------------
+该函数返回 *table* 表中 *column* 列的类型。返回内置类型名称，例如， *text、varchar、number、money、double、bytea、json、datetime、double*。
+
+* *table* - 数据表名称；
+* *column* - 列名称。
+
+.. code:: js
+
+    var coltype string
+    coltype = GetColumnType("members", "member_name")
 
 LangRes(appID int64,label string, lang string) string
 -------------------------------------------------------------------------------------------------
