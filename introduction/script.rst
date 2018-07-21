@@ -306,12 +306,16 @@ If 和 While
 ---------------------------------
 合约语言支持标准条件语句 ``if`` 和 ``while`` 循环，可以在函数和合约中使用。这些语句可以相互嵌套。
 
-一个关键字应该跟一个条件语句。 如果条件语句返回一个数字，那么当它的值=零时，它被认为是错误的。例如， ``val == 0`` 相当于 ``!val`` ，而 ``val != 0`` 与 ``val`` 相同。 ``if`` 语句可以有一个else块，在if条件语句为 ``false`` 时执行。以下比较运算符可用于条件语句：``<,>,>=,<=,==,!=,||（OR）和&&（AND）`` 。
+关键字必须有一个条件语句。如果条件语句返回一个数字，那么当它的值为0时。例如， ``val == 0`` 等于 ``!val`` ，而 ``val != 0`` 等于 ``val`` 。 ``if`` 语句允许有一个else或多个elif，elif必须包含一个条件。以下比较运算符可用于条件语句：``<,>,>=,<=,==,!=,||和&&`` 。
 
 .. code:: js
 
     if val > 10 || id != $citizen {
       ...
+    } elif val == 5 {
+       ...
+    } elif val < 0 {
+       ...
     } else {
       ...
     }
@@ -585,8 +589,34 @@ GetColumnType(table, column string) string
     var coltype string
     coltype = GetColumnType("members", "member_name")
 
+GetDataFromXLSX(binId int, line int, count int, sheet int) string
+--------------------------------------------------------------------
+该函数将数据作为XLSX表中的单元格数组返回。
+
+* *binId* - *binary* 表中XLSX类型的ID；
+* *line* - 获取数据的行；
+* *count* - 返回的行数；
+* *sheet* - XLSX文件中的工作表编号，默认为1。
+
+.. code:: js
+
+    var a array
+    a = GetDataFromXLSX(binid, 12, 10, 1)
+
+GetRowsCountXLSX(binId int, sheet int) int
+---------------------------------------------
+该函数返回XLSX文件中指定工作表上的行数。
+
+* *binId* - *binary* 表中XLSX类型的ID；
+* *sheet* - XLSX文件中的工作表编号，默认为1。
+
+.. code:: js
+
+    var count int
+    count = GetRowsCountXLSX(binid, 1)
+
 LangRes(appID int64,label string, lang string) string
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------
 此函数返回lang的语言资源，并指定为双字符代码，例如， ``zh,en,ru`` ，如果所选语言没有语言资源，则结果将以 ``zh`` 返回。
 
 * *appID* - 生态系统ID；
@@ -1032,6 +1062,60 @@ Substr(s string, offset int, length int) string
 
     var s string
     s = Substr($Name, 1, 10)
+ToLower(val string) string
+------------------------------
+返回 *val* 转换为小写形式的副本。
+
+* *val* - 传入字符串。
+
+.. code:: js
+
+    val = ToLower(val)    
+
+ToUpper(val string) string
+------------------------------
+返回 *val* 转换为大写形式的副本。
+
+* *val* - 传入字符串。
+
+.. code:: js
+
+    val = ToUpper(val)    
+
+TrimSpace(val string) string
+------------------------------
+该函数删除 *val* 的前后空格、行转换和制表符并返回指定的字符串，。
+
+* *val* - 传入字符串。
+
+.. code:: js
+
+    val = TrimSpace(val)    
+
+字节操作
+==============================
+
+StringToBytes(src string) bytes
+------------------------------
+该函数将 *src* 转换为字节类型。
+
+* *src* - 字符串。
+
+.. code:: js
+
+    var b bytes
+    b = StringToBytes("my string")
+
+BytesToString(src bytes) string
+------------------------------
+该函数将 *src* 转换为字符串类型。
+
+* *src* - 字节。
+
+.. code:: js
+
+    var s string
+    s = BytesToString($Bytes)
 
 系统变量操作
 ==============================
@@ -1093,6 +1177,13 @@ DBUpdateSysParam(name, value, conditions string)
    DBInsert("mytable", "name,mytime", "John Dow", "timestamp " + date )
    DBInsert("mytable", "name,mytime", "John Dow", "timestamp " + $txtime )
 
+BlockTime()
+-------------
+该函数返回到SQL格式的生成时间。应该使用该函数代替 **NOW()** 函数。
+
+.. code:: js
+
+    DBInsert(`mytable`, `created_at`, BlockTime())
 
 VDE功能
 ==============================

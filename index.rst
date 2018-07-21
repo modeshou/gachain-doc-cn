@@ -35,7 +35,6 @@ GAChain平台的软件客户端起名为Molis和编程语言：智语言（G Lan
    introduction/templates2.rst
    introduction/appexample.rst
    introduction/api2.rst 
-   introduction/exchangeapi.rst
    introduction/vm.rst
    introduction/install.rst
    introduction/thesaurus.rst
