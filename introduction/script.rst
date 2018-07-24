@@ -1096,7 +1096,7 @@ TrimSpace(val string) string
 ==============================
 
 StringToBytes(src string) bytes
-------------------------------
+----------------------------------
 该函数将 *src* 转换为字节类型。
 
 * *src* - 字符串。
@@ -1107,7 +1107,7 @@ StringToBytes(src string) bytes
     b = StringToBytes("my string")
 
 BytesToString(src bytes) string
-------------------------------
+------------------------------------
 该函数将 *src* 转换为字符串类型。
 
 * *src* - 字节。
