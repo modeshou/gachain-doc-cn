@@ -1,5 +1,10 @@
+.. Gachain documentation master file, created by
+   sphinx-quickstart on Tue Aug 21 19:05:42 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
 政务链v2技术开发文档
-=======================
+====================
 
 该文档包含了政务区块链平台（GAChain Platform）的描述，政务链平台的基础研发于2011年开展，2016年正式启动政务链（GAChain）的研发，经过政务流程团队、电子政务专家顾问团队和技术团队的努力，至2016第三季度，完成了如下工作: 
 
@@ -30,8 +35,8 @@ GAChain平台的软件客户端起名为Molis和编程语言：智语言（G Lan
 .. toctree::
    :maxdepth: 4
 
-   /introduction/what-is-Gachain.rst
-   /introduction/script.rst
+   introduction/what-is-Gachain.rst
+   introduction/script.rst
    introduction/templates2.rst
    introduction/appexample.rst
    introduction/api2.rst 

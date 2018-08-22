@@ -130,7 +130,8 @@
 * ``$block_key_id`` – 生成包含此事务的区块的节点的地址；
 * ``$block_time`` – 当前合约的交易的区块生成的时间戳，time;
 * ``$original_contract`` - 合约的名称，最初被称为事务处理。如果该变量是空字符串，则意味着在验证条件的过程中调用了该合约。为了检查该合同是否被另一个合同或直接从当前事务中调用，比较 **$original_contract** 和 **$this_contract** 的值。如果它们相等，则意味着从当前事务中调用了合约；
-* ``$this_contract`` - 当前执行的合约名称。
+* ``$this_contract`` - 当前执行的合约名称；
+* ``$stack`` - 数组类型，包含合约名称，数组的第一个元素为当前调用的合约，数组的最后一个元素是处理交易的原始合约。
 
 预定义变量不仅可以在合约中使用，也可以在权限字段（定义访问应用程序元素的条件）中使用，这些变量用于构建逻辑表达式。当在权限字段中使用时，与区块形成（$time，$block等）相关的变量总是等于零。
 
@@ -412,13 +413,6 @@ If 和 While
 需要注意的是，这些变量不仅在合约函数中，而且在其他函数和表达式中也是可用的。例如，在合约，页面和其他对象指定的条件下，与区块有关的 *$time* ，*$block* 变量等于0。
 
 需要从合约中返回的值应该被分配给一个预定义的变量 ``$result``。
-
-生成唯一标识符
-================
-
-UUID
-------
-以字符串形式生成并返回的新 *UUID 4*。
 
 数据库中检索值
 ==============
@@ -861,13 +855,23 @@ GetContractByName(name string) int
     var name string
     name = GetContractByName($IdContract) 
 
+RoleAccess(id int, [id int]) bool
+-------------------------------------
+该函数检查调用合约的用户角色标识符是否与参数中列出的标识符之一匹配。 用于控制合约对数据表和其他数据的访问。
 
-ValidateCondition(condition string, state int) 
+* *id* - 角色ID.
+
+.. code:: js
+
+    RoleAccess(1)  
+    RoleAccess(1, 3) 
+
+ValidateCondition(condition string, ecosystemid int) 
 -----------------------------------------------------------------
-该函数试图编译 ``condition`` 参数中指定的条件。如果在编译过程中发生错误，将会产生错误，并且合约成功调用。此功能旨在检查条件更改时的正确性。
+该函数编译 ``condition`` 参数中指定的条件。如果在编译过程中发生错误，将会产生错误，并且合约成功调用。此功能旨在检查更改条件时的正确性。
 
-* *condition* - 可证实的条件；
-* *state* - 状态标识符。全局条件的标识符为 ``0``。
+* *condition* - 验证的条件；
+* *ecosystemid* - 生态系统标识符。
 
 .. code:: js
 
@@ -978,21 +982,63 @@ Str(val int|float) string
     myfloat = 5.678
     val = Str(myfloat)
 
-UpdateLang(name string, trans string)
------------------------------------------------------------------
-函数更新内存中的语言源，用于更改语言源。
+UpdateLang(state int, appID int, name string, trans string, vde bool)
+---------------------------------------------------------------------------
+该函数更新内存中的多语言资源，用于更改语言资源。
 
-* *name* - 语言来源的名称；
-* *trans* - 来源与翻译。
+* *state* - 生态系统ID；
+* *appID* - 应用程序ID；
+* *name* - 多语言资源的名称；
+* *trans* - 已翻译的多语言资源资源；
+* *vde* - 是否为vde。
 
 .. code:: js
 
-    UpdateLang($Name, $Trans)
+    UpdateLang($state, $appID, $Name, $Trans, false)
+
+JSONEncode(src int|float|string|map|array) string
+-------------------------------------------------------
+该函数将数字、字符串或数组 *src* 转换为JSON格式的字符串。
+
+* *src* - 要转换为JSON的数据。
+
+.. code:: js
+
+    var mydata map
+    mydata["key"] = 1
+    var json string
+    json = JSONEncode(mydata)
+
+JSONEncodeIndent(src int|float|string|map|array, indent string) string
+--------------------------------------------------------------------------
+该函数将数字、字符串或数组 *src* 转换为具有指定缩进的JSON格式的字符串。
+
+* *src* - 要转换为JSON的数据；
+* *indent* - 用作缩进的字符串。
+
+.. code:: js
+
+    var mydata map
+    mydata["key"] = 1
+    var json string
+    json = JSONEncodeIndent(mydata, "\n")
+
+
+JSONDecode(src string) int|float|string|map|array
+--------------------------------------------------
+该函数可以将src的数据转换为json格式、字符串或数组。
+
+* *src* - 要转换为JSON的数据。
+
+.. code:: js
+
+    var mydata map
+    mydata = JSONDecode(`{"name": "John Smith", "company": "Smith's company"}`)
 
 字符串操作
 ==============================
 HasPrefix(s string, prefix string) bool
------------------------------------------------------------------
+----------------------------------------
 如果字符串 ``s`` 的开始部分是 ``prefix``，返回 ``true``。
 
 * *s* - 需要检查的字符串；
@@ -1062,6 +1108,7 @@ Substr(s string, offset int, length int) string
 
     var s string
     s = Substr($Name, 1, 10)
+    
 ToLower(val string) string
 ------------------------------
 返回 *val* 转换为小写形式的副本。

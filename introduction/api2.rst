@@ -59,9 +59,9 @@ Molis软件客户端提供的所有功能，包括认证、生态系统数据接
 
 **E_RECOVERED** 表示发现需要寻找并修复的错误。如果系统尚未安装，除了 *install* 命令，任何命令都会返回 **E_NOTINSTALLED** 。**E_SERVER** 可能会在任何响应命令中出现。如果输入不正确参数而出现错误，则可以将其更改为相关错误。在其他情况下，该错误报告无效操作或不正确的系统配置，则需要更详细的调查。如果没有执行登录或会话已过期，除 *install* ， *getuid* ， *login* 之外，其他任何命令都返回 **E_UNAUTHORIZED** 。
 
-*******************
+***************************
 VDE中不可用的路由(POST方式)
-*******************
+***************************
 
 .. code::
 
@@ -74,6 +74,7 @@ VDE中不可用的路由(POST方式)
     block
     maxblockid
     ecosystemparams
+    ecosystemparam
     systemparams
     ecosystems
 
@@ -194,77 +195,28 @@ refresh
     
 错误: *E_SERVER、E_TOKEN、E_REFRESHTOKEN* 
 
-signtest
+********************************************************************************
+常用命令
+********************************************************************************
+
+version
 ==============================
-**POST**/ 用指定的私钥签署一个字符串。它只能用于API测试，因为通常私钥不应该发送给服务器。私钥可以在服务器启动目录中找到。
+**GET**/ 返回服务器的当前版本。
+
+请求
 
 .. code:: 
-    
-    POST
-    /api/v2/signtest
-    
-* *private* - 十六进制私钥；
-* *forsign* - 字符串签名。
+
+    GET
+    /api/v2/version
 
 响应
-
-* *signature* - 十六进制签名；
-* *pubkey* - 发送的十六进制私钥的公钥。
-    
-响应示例
 
 .. code:: 
     
     200 (OK)
     Content-Type: application/json
-    {
-        "signature": "0011fa..."，
-        "pubkey": "324bd7..."
-    }      
-
-错误: *E_SERVER* 
-
-********************************************************************************
-服务命令
-********************************************************************************
-
-install
-==============================
-**POST**/ 启动安装。安装成功后，系统将重新启动。
-
-查询
-
-.. code:: 
-
-    POST
-    /api/v2/install
-    
-* *type* - 安装类型: **PRIVATE_NET、TESTNET_NODE、TESTNET_URL**；
-* *log_level* - 日志级别: **ERROR、DEBUG**；
-* *first_load_blockchain_url* - 获得区块链的地址，在 *type* 的情况下被指定为 **TESTNET_URL**；
-* *db_host* - PostgreSQL数据库的主机。例如： *localhost*；
-* *db_port* - PostgreSQL数据库的端口。 例如： *5432*；
-* *db_name* - PostgreSQL数据库的名称。 例如： *mydb*；
-* *db_user* - PostgreSQL数据库的用户名， 例如， *postgres*；
-* *db_pass* - PostgreSQL数据库的密码， 例如： *postgres*；
-* *generate_first_block* -  *type* 为 *Private-net* 时，可以设置为 ``0`` 或 ``1``；
-* *first_block_dir* - 当 *generate_first_block* 为 0 和 *type* 为 *PRIVATE_NET* 时，第一个区块的目录被指定为 *1block*。
-
-响应
-
-* *success* - 在成功完成的情况下为 ``true``。
-
-响应示例
-
-.. code:: 
-    
-    200 (OK)
-    Content-Type: application/json
-    {
-        "success": true
-    }      
-    
-错误: *E_SERVER、E_INSTALLED、E_DBNIL* 
+    "0.1.6"
 
 ********************************************************************************
 数据请求函数
@@ -325,31 +277,6 @@ ecosystems
     {
         "number": 100，
     }      
-
-vde/create
-==============================
-**POST**/ 创建当前生态系统的虚拟专用生态系统（VDE）。
-
-.. code:: 
-    
-    POST
-    /api/v2/vde/create
-
-响应
-
-* *result* - 如果已创建VDE，则返回 ``true``。
-    
-响应示例
-
-.. code:: 
-    
-    200 (OK)
-    Content-Type: application/json
-    {
-        "result": true，
-    }     
-    
-错误: *E_VDECREATED*
 
 ecosystemparams
 ==============================
@@ -928,7 +855,7 @@ content/{menu|page}/{name}
         }，
     }      
 
-错误: *E_NOTFOUND*
+错误: *E_NOTFOUND, E_SERVER, E_HEAVYPAGE*
 
 node/{name}
 ==============================
